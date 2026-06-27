@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "track order";
+    Layout = "_Layout";
+}
+
+<section class="track-hero-section">
+    <div class="track-hero-content">
+        <h1><span class="line"></span> TRACK ORDER <span class="line"></span></h1>
+    </div>
+</section>
+
+<section class="track-main-section">
+    <div class="container">
+        <div class="track-forms">
+            <div class="track-form-card">
+                <h3>Check Shipping Status<br>By Order Number & Email</h3>
+                <form class="track-form" id="orderForm">
+                    <input type="text" name="orderNumber" placeholder="Order Number" class="track-input">
+                    <input type="email" name="email" placeholder="Email Address" class="track-input">
+                    <button type="button" id="btn_orderForm" class="track-button">Track Order</button>
+                </form>
+            </div>
+
+            <div class="track-form-card">
+                <h3>Check Shipping Status<br>Number By Tracking Number</h3>
+                <form class="track-form" id="trackingForm">
+                    <input type="text" name="trackingNumber" placeholder="Tracking Number" class="track-input">
+                    <button type="button" id="btn_trackingForm" class="track-button">Track Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#c41e3a; color:#fff;">
+                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="orderModalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        var baseUrl = '@Url.Content("~/")';
+    </script>
+    <script src="~/js/XtremeTypeScript/FrontendScript/trackorder.js"></script>
+}

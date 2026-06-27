@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Terms & Conditions";
+    Layout = "_Layout";
+}
+
+<section class="Terms-hero-section">
+    <div class="Terms-hero-content">
+        <h1><span class="line"></span> TERMS & CONDITIONS <span class="line"></span></h1>
+    </div>
+</section>
+
+<section class="content-page">
+    <div class="container">
+        <div>
+            @Html.Raw(ViewBag.Terms)
+        </div>
+    </div>
+</section>

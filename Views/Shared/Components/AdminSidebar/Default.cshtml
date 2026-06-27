@@ -1,0 +1,69 @@
+﻿@model List<XtremeType.Models.RolePagePermission>
+
+@{
+    var userName = Context.Session.GetString("AdminUserName");
+    var userRole = Context.Session.GetString("AdminUserRoleName");
+
+    if (string.IsNullOrWhiteSpace(userName))
+    {
+        userName = "Guest";
+    }
+
+    if (string.IsNullOrWhiteSpace(userRole))
+    {
+        userRole = "Guest";
+    }
+}
+
+<nav class="navbar custom-navbar navbar-dark">
+    <a class="navbar-brand mx-4 mb-3">
+        <img src="~/images/xt 1.png" alt="XtremeType Logo" class="img-fluid" style="height: 80px;">
+    </a>
+
+    <div class="d-flex align-items-center ms-4 mb-4">
+        <div class="position-relative">
+            <img class="rounded-circle"
+                 src="@(Context.Session.GetString("AdminUserProfileImage") ?? "/images/default-user.png")"
+                 alt="profile"
+                 style="width: 40px; height: 40px;">
+            <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+        </div>
+        <div class="ms-3 user-info">
+            <h6 class="mb-0">@userName</h6>
+            <span>@userRole</span>
+        </div>
+    </div>
+
+    <div class="navbar-nav w-100">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var perm in Model)
+            {
+                if (perm.CanView && perm.Page != null)
+                {
+                    <a href="@perm.Page.PageUrl" class="nav-item nav-link">
+                        <i class="@perm.Page.IconClass"></i> @perm.Page.PageName
+                    </a>
+                }
+            }
+        }
+        else
+        {
+            <span class="text-muted px-3">No permissions assigned</span>
+        }
+    </div>
+</nav>
+
+<script>
+    $(document).ready(function () {
+        var currentPath = window.location.pathname.toLowerCase();
+        $('.navbar-nav .nav-link').each(function () {
+            var linkPath = $(this).attr('href').toLowerCase();
+            if (currentPath === linkPath || currentPath.startsWith(linkPath)) {
+                $('.navbar-nav .nav-link').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            }
+        });
+    });
+</script>

@@ -1,0 +1,75 @@
+﻿@model XtremeType.ViewModels.AboutPageView
+@{
+    ViewData["Title"] = "About";
+    Layout = "_Layout";
+}
+
+<section class="about-hero-section">
+    <div class="about-hero-content">
+        <h1><span class="line"></span> ABOUT US <span class="line"></span></h1>
+    </div>
+</section>
+
+<section class="about-main-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-text">
+                <h2><span class="line"></span> ABOUT US</h2>
+                <h3>SHOP FOR ALL CAR & AUTO REPAIRS</h3>
+                <p>@Html.Raw(Model?.AboutUs)</p>
+
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Vehicle Parts</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2000+</div>
+                        <div class="stat-label">Happy Clients</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">14+</div>
+                        <div class="stat-label">Years of Trust</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="~/images/Aboutfirst.png" alt="About Us Image">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="trusted-partner-section">
+    <div class="container">
+        <div class="trusted-content">
+            <div class="trusted-image">
+                <img src="~/images/Aboutsec.png" alt="Trusted Partner">
+            </div>
+            <div class="trusted-text">
+                <h2><span class="line"></span> WHO WE ARE</h2>
+                <h3>YOUR TRUSTED VEHICLE PARTS PARTNER</h3>
+                <p>@Html.Raw(Model?.WhoWeAre)</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* <section class="video-section">
+    <div class="video-container">
+        @if (!string.IsNullOrEmpty(ViewBag.VideoLink))
+        {
+            <iframe width="100%" height="600"
+                    src="@ViewBag.VideoLink"
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen></iframe>
+        }
+        else
+        {
+            <div class="video-overlay">
+                <button class="play-button" id="playVideo"></button>
+            </div>
+        }
+    </div>
+</section> *@

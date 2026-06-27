@@ -1,0 +1,145 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var userName = "Guest";
+    var profileImage = "/images/default-user.png";
+    if (HttpContextAccessor?.HttpContext?.Session != null)
+    {
+        userName = HttpContextAccessor.HttpContext.Session.GetString("AdminUserName") ?? "Guest";
+        profileImage = HttpContextAccessor.HttpContext.Session.GetString("AdminUserProfileImage") ?? "/images/default-user.png";
+    }
+}
+
+
+<style>
+    #notificationCount {
+        font-size: 0.65em;
+        min-width: 1.2em; 
+        height: 1.2em;
+        line-height: 1.2em;
+        padding: 0 0.3em;
+        border-radius: 50%;
+        text-align: center;
+        position: absolute;
+        top: 0.1em; 
+        right: -0.3em;
+        background-color: #dc3545; 
+        color: #fff;
+        display: none;
+    }
+
+    #notificationList {
+        max-height: 25vh; 
+        overflow-y: auto; 
+        min-width: 12em; 
+    }
+
+        #notificationList .notification-item {
+            padding: 0.5em 1em;
+            font-size: 0.9em;
+            white-space: normal; 
+        }
+
+        #notificationList::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #notificationList::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+</style>
+
+<nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+    <a href="index.html" class="navbar-brand d-flex d-lg-none me-4"></a>
+    <a href="#" class="sidebar-toggler flex-shrink-0" style="color: #3C3B6E !important;">
+        <i class="fa fa-bars"></i>
+    </a>
+
+    <div class="navbar-nav align-items-center ms-auto">
+
+        <div class="nav-item dropdown me-3">
+            <a href="#" class="nav-link position-relative" id="notificationToggle" data-bs-toggle="dropdown">
+                <i class="fa fa-bell"></i>
+                <span class="badge bg-danger text-white position-absolute" id="notificationCount"
+                      style="top: 11px; right: -5px; font-size: 0.7rem; display:none;"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0" id="notificationList" style="min-width: 280px;">
+                <span class="dropdown-item text-muted">No new notifications</span>
+            </div>
+        </div>
+
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <img class="rounded-circle me-lg-2" src="@profileImage" alt="" style="width: 40px; height: 40px;">
+                <span class="d-none d-lg-inline-flex">@userName</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                <a asp-area="Admin" asp-controller="Account" asp-action="Profile" class="dropdown-item">My Profile</a>
+                <a asp-area="Admin" asp-controller="Account" asp-action="Logout" class="dropdown-item">Log Out</a>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+<audio id="notificationSound" src="/sounds/alert.mp3" preload="auto"></audio>
+
+<script>
+       let lastNotificationIds = new Set();
+    let audio = document.getElementById('notificationSound');
+    let firstLoad = true;
+
+    async function fetchNotifications() {
+        try {
+            const data = await $.getJSON('/Admin/Dashboard/GetNotifications');
+            const list = $('#notificationList');
+            const count = $('#notificationCount');
+            list.empty();
+
+            if (data.length > 0) {
+                count.text(data.length).show();
+
+                const newNotifications = data.filter(n => !lastNotificationIds.has(n.id));
+                if (!firstLoad && newNotifications.length > 0) { 
+                    audio.currentTime = 0;
+                    audio.play().catch(() => {});
+                }
+
+                lastNotificationIds = new Set(data.map(n => n.id));
+
+                data.forEach(n => {
+                    list.append(`
+                        <div class="dropdown-item notification-item" data-id="${n.id}">
+                            ${n.message}
+                        </div>
+                    `);
+                });
+            } else {
+                lastNotificationIds.clear();
+                count.hide();
+                list.append('<span class="dropdown-item text-muted">No new notifications</span>');
+            }
+
+            firstLoad = false; 
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    $(document).on('click', '.notification-item', function () {
+        const id = $(this).data('id');
+        $.post('/Admin/Dashboard/MarkAsRead', { id: id });
+        $(this).remove();
+
+        const count = $('#notificationCount');
+        let current = parseInt(count.text());
+        if (!isNaN(current) && current > 0) {
+            count.text(current - 1);
+            if (current - 1 === 0) count.hide();
+        }
+    });
+
+    fetchNotifications();
+    setInterval(fetchNotifications, 5000);
+</script>

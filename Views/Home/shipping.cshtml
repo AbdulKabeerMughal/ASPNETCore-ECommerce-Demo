@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Shipping & Handling";
+    Layout = "_Layout";
+}
+
+<section class="Shipping-hero-section">
+    <div class="Shipping-hero-content">
+        <h1><span class="line"></span> Shipping & Handling <span class="line"></span></h1>
+    </div>
+</section>
+
+<div class="delivery-container">
+    @Html.Raw(ViewBag.ShippingPolicy)
+</div>

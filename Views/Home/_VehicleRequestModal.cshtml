@@ -1,0 +1,46 @@
+﻿<div class="modal fade" id="vehicleModal" tabindex="-1" aria-labelledby="vehicleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold text-danger" id="vehicleModalLabel">- Product Not Found -</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="productRequestForm">
+                    <div class="mb-3">
+                        <label class="form-label">Name*</label>
+                        <input type="text" name="FullName" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email*</label>
+                        <input type="email" name="Email" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone*</label>
+                        <input type="text" name="Phone" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Message</label>
+                        <textarea name="Message" class="form-control"></textarea>
+                    </div>
+                    <h5>Vehicle Info</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Year*</label>
+                        <input type="text" name="VehicleInfo.Year" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Make*</label>
+                        <input type="text" name="VehicleInfo.Make" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Model*</label>
+                        <input type="text" name="VehicleInfo.Model" class="form-control" />
+                    </div>
+                    <div class="mb-3 text-center">
+                        <button type="submit" class="btn btn-warning fw-bold px-5">Submit Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

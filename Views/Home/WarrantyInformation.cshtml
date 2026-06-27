@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Warranty Information";
+    Layout = "_Layout";
+}
+
+<section class="WarrantyInformation-hero-section">
+    <div class="WarrantyInformation-hero-content">
+        <h1>
+            <span class="line"></span> Warranty Information <span class="line"></span>
+        </h1>
+    </div>
+</section>
+
+<div class="warranty-container">
+    @Html.Raw(ViewBag.WarrantyInfo)
+</div>
+
+<div class="warranty-action">
+    <a asp-controller="Home" asp-action="RequestCancellation" class="warranty-button">
+        Request a Cancellation
+    </a>
+</div>

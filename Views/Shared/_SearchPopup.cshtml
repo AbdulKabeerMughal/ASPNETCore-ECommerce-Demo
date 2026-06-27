@@ -1,0 +1,140 @@
+﻿<div class="search-popup-overlay"></div>
+
+<div class="search-popup-box">
+    <div class="search-popup-header">
+        <h2>SEARCH</h2>
+        <span class="close-popup">&times;</span>
+    </div>
+    <form method="get" action="@Url.Action("Search", "Home")">
+        <input type="text" name="keyword" placeholder="Enter Keyword" required />
+        <button type="submit">Search Now</button>
+    </form>
+</div>
+
+
+<style>
+    .search-popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+        display: none;
+    }
+
+    .search-popup-box {
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #fff;
+        padding: 30px 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        z-index: 1000;
+        display: none;
+        width: 350px;
+        max-width: 90%;
+    }
+
+    .search-popup-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+        .search-popup-header h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2e2f4f;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .search-popup-header .close-popup {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+    .search-popup-box form input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .search-popup-box form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #c8102e;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .search-popup-box form button:hover {
+            background-color: #a40e27;
+        }
+
+    .search-popup {
+        display: none;
+        position: fixed;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        z-index: 1000;
+    }
+
+        .search-popup input {
+            padding: 5px;
+            width: 250px;
+        }
+
+        .search-popup .close-popup {
+            cursor: pointer;
+            position: absolute;
+            top: 5px;
+            right: 10px;
+        }
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+            const searchToggle = document.querySelector(".search-popup-toggle");
+            const searchPopup = document.querySelector(".search-popup-box");
+            const overlay = document.querySelector(".search-popup-overlay");
+            const closeBtn = document.querySelector(".close-popup");
+
+            if (searchToggle && searchPopup && overlay) {
+                searchToggle.addEventListener("click", () => {
+                    searchPopup.style.display = "block";
+                    overlay.style.display = "block";
+                });
+            }
+
+            if (closeBtn && overlay) {
+                closeBtn.addEventListener("click", () => {
+                    searchPopup.style.display = "none";
+                    overlay.style.display = "none";
+                });
+
+                overlay.addEventListener("click", () => {
+                    searchPopup.style.display = "none";
+                    overlay.style.display = "none";
+                });
+            }
+        });
+</script>

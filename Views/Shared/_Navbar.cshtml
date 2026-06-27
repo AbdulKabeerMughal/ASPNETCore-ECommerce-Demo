@@ -1,0 +1,130 @@
+﻿@using XtremeType.ViewModels
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var cart = HttpContextAccessor.HttpContext.Session.GetObjectFromJson<CartViewModel>("Cart");
+    int totalItems = cart?.Items?.Sum(i => i.Quantity) ?? 0;
+}
+
+<div class="logo">
+    <a href="@Url.Action("Index", "Home")">
+        <img src="~/images/XTREME TYPE LOGO FINAL 1.png" alt="Logo" />
+    </a>
+</div>
+
+<div class="mobile-cart">
+    <a href="@Url.Action("Cart", "Home")">
+        <img src="~/images/card icon.png" alt="Cart" />
+        <span class="cart-count">@totalItems</span>
+    </a>
+</div>
+
+<div class="hamburger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="menu-overlay"></div>
+
+
+<div class="nav-boxes">
+    <div class="nav-item">
+        <a href="@Url.Action("Blog", "Home")">
+            <img src="~/images/blog icon.png" alt="Blog" />
+            <span>BLOG</span>
+        </a>
+    </div>
+    <div class="nav-item">
+        <a href="@Url.Action("Track", "Home")">
+            <img src="~/images/track icon.png" alt="Track" />
+            <span>TRACK ORDER</span>
+        </a>
+    </div>
+    <div class="nav-item">
+        <a href="@Url.Action("Faq", "Home")">
+            <img src="~/images/faq icon.png" alt="FAQ" />
+            <span>FAQ</span>
+        </a>
+    </div>
+    <div class="nav-item">
+        <a href="@Url.Action("About", "Home")">
+            <img src="~/images/about us icon.png" alt="About" />
+            <span>ABOUT US</span>
+        </a>
+    </div>
+    <div class="nav-item">
+        <a href="@Url.Action("Review", "Home")">
+            <img src="~/images/review icon.png" alt="Review" />
+            <span>REVIEWS</span>
+        </a>
+    </div>
+    <div class="nav-item">
+        <a href="@Url.Action("Account", "Home")">
+            <img src="~/images/Account icon.png" alt="Account" />
+            <span>ACCOUNT</span>
+        </a>
+    </div>
+    <div class="nav-item">
+        <a href="@Url.Action("Shopnow", "Home")">
+            <img src="~/images/shop now icon.png" alt="Shop" />
+            <span>Shop Now</span>
+        </a>
+    </div>
+    <div class="nav-item">
+        <a href="@Url.Action("Cart", "Home")">
+            <img src="~/images/card icon.png" alt="Cart" />
+            Cart (@totalItems)
+        </a>
+    </div>
+    <div class="nav-item search-popup-toggle">
+        <a href="javascript:void(0)">
+            <img src="~/images/search icon.png" alt="Search" />
+            <span>SEARCH</span>
+        </a>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const hamburger = document.querySelector(".hamburger-menu");
+        const navBoxes = document.querySelector(".nav-boxes");
+        const overlay = document.querySelector(".menu-overlay");
+        const body = document.body;
+
+        function toggleMenu() {
+            hamburger.classList.toggle("active");
+            navBoxes.classList.toggle("open");
+            overlay.classList.toggle("show");
+            body.classList.toggle("menu-open");
+        }
+
+        hamburger.addEventListener("click", toggleMenu);
+        overlay.addEventListener("click", toggleMenu);
+
+        const navItems = document.querySelectorAll(".nav-item");
+        const currentPath = window.location.pathname.toLowerCase();
+
+        navItems.forEach(item => {
+            const link = item.querySelector("a");
+            if (link) {
+                let linkPath = link.getAttribute("href").toLowerCase();
+
+                if (linkPath.endsWith("/")) linkPath = linkPath.slice(0, -1);
+                if (linkPath.indexOf("?") > -1) linkPath = linkPath.split("?")[0];
+                if (linkPath.indexOf("#") > -1) linkPath = linkPath.split("#")[0];
+
+                if ((currentPath === "/myaccount" && linkPath === "/account") || currentPath === linkPath) {
+                    item.classList.add("active");
+                }
+            }
+
+            item.addEventListener("click", function () {
+                navItems.forEach(i => i.classList.remove("active"));
+                this.classList.add("active");
+            });
+        });
+    });
+</script>
+

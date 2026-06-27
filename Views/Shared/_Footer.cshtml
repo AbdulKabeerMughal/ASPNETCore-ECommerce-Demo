@@ -1,0 +1,155 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <div class="footer-logo">
+                <img src="~/images/xt 1.png" alt="XTREMETYPES" />
+            </div>
+            <p style="color:#9696a1 !important;">
+                Welcome to <b>Xtreme Types</b>, your trusted source for high-quality auto parts across the USA.
+                We offer durable, OEM-style replacement parts at affordable prices — perfect for repairs, restorations, or upgrades.
+                <br><br>
+                <b>Why Choose Us:</b><br>
+                • Fast 3–5 business day delivery<br>
+                • Secure online shopping<br>
+                • Affordable &amp; reliable car parts<br>
+                • Excellent customer service
+            </p>
+
+        </div>
+
+        <div class="footer-section">
+            <h4>QUICK LINKS</h4>
+            <ul>
+                <li><a asp-controller="home" asp-action="Shipping">Shipping &amp; Handling</a></li>
+                <li><a asp-controller="home" asp-action="RequestCancellation">Request A Cancellation</a></li>
+                <li><a asp-controller="home" asp-action="WarrantyInformation">Warranty Information</a></li>
+                <li><a asp-controller="home" asp-action="ReturnsCancellations">Returns &amp; Cancellations</a></li>
+                <li><a asp-controller="home" asp-action="Track">Track Order</a></li>
+                <li><a asp-controller="home" asp-action="Blog">Blog</a></li>
+                <li><a asp-controller="home" asp-action="FAQ">FAQ</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>CONTACT INFO</h4>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <img src="~/images/Group 1000006286.png" alt="Phone" />
+                </div>
+                <span>@HttpContextAccessor.HttpContext.Session.GetString("FooterPhone")</span>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <img src="~/images/Group 1000006287.png" alt="Email" />
+                </div>
+                <span>@HttpContextAccessor.HttpContext.Session.GetString("FooterEmail")</span>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <img src="~/images/Group 1000006287-1.png" alt="Location" />
+                </div>
+                <div>
+                    <div>@HttpContextAccessor.HttpContext.Session.GetString("FooterAddress")</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>NEWSLETTER</h4>
+            <div class="newsletter">
+                <input type="email" id="newsletterEmail" placeholder="Enter Email Address" />
+                <button id="btnSubscribe">Subscribe Now</button>
+            </div>
+            <div class="social-links">
+                <a href="@HttpContextAccessor.HttpContext.Session.GetString("FacebookLink")" target="_blank">
+                    <img src="~/images/FooterFb.png" alt="Facebook" />
+                </a>
+             @*    <a href="@HttpContextAccessor.HttpContext.Session.GetString("TwitterLink")" target="_blank">
+                    <img src="~/images/footerX.png" alt="Twitter" />
+                </a> *@
+                <a href="@HttpContextAccessor.HttpContext.Session.GetString("InstagramLink")" target="_blank">
+                    <img src="~/images/footerinsta.png" alt="Instagram" />
+                </a>
+                <a href="@HttpContextAccessor.HttpContext.Session.GetString("YouTubeLink")" target="_blank">
+                    <img src="~/images/footeryt.png" alt="YouTube" />
+                </a>
+                @* <a href="@HttpContextAccessor.HttpContext.Session.GetString("TikTokLink")" target="_blank">
+                    <img src="~/images/footertiktok.png" alt="TikTok" />
+                </a> *@
+            </div>
+        </div>
+    </div>
+
+    <hr class="footer-line">
+
+    <div class="footer-bottom">
+        <p>
+            <a asp-controller="home" asp-action="Terms">Terms &amp; Conditions</a> |
+            <a asp-controller="home" asp-action="Privacy">Privacy Policy</a>
+        </p>
+        <p>© Copyright 2026. Designed and Developed by Droptechify</p>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const emailInput = document.getElementById("newsletterEmail");
+        const subscribeBtn = document.getElementById("btnSubscribe");
+
+        function showMessage(message, type = "success") {
+            const msgBox = document.createElement("div");
+            msgBox.textContent = message;
+            msgBox.style.position = "fixed";
+            msgBox.style.bottom = "20px";
+            msgBox.style.right = "20px";
+            msgBox.style.padding = "12px 18px";
+            msgBox.style.borderRadius = "8px";
+            msgBox.style.fontWeight = "500";
+            msgBox.style.zIndex = "9999";
+            msgBox.style.color = "#fff";
+            msgBox.style.backgroundColor = type === "success" ? "#28a745" : "#dc3545";
+            msgBox.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
+            msgBox.style.transition = "opacity 0.3s ease";
+
+            document.body.appendChild(msgBox);
+
+            setTimeout(() => { msgBox.style.opacity = "0"; }, 2500);
+            setTimeout(() => { msgBox.remove(); }, 3000);
+        }
+
+        if (!subscribeBtn) return;
+
+        subscribeBtn.addEventListener("click", async function () {
+            const email = emailInput.value.trim();
+            if (!email) {
+                showMessage("Please enter your email address.", "error");
+                return;
+            }
+
+            try {
+                const res = await fetch("/Home/SubscribeNewsletter", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams({ email })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    showMessage(data.message || "Subscribed successfully!");
+                    emailInput.value = "";
+                } else {
+                    showMessage(data.message || "Something went wrong.", "error");
+                }
+            } catch (err) {
+                console.error(err);
+                showMessage("Something went wrong. Please try again later.", "error");
+            }
+        });
+    });
+</script>

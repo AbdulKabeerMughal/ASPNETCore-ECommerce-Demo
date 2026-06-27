@@ -1,0 +1,24 @@
+﻿@{
+    var currentAction = ViewContext.RouteData.Values["action"].ToString().ToLower();
+    var isCheckoutStep = currentAction == "checkout" || currentAction == "reviewandpayment";
+    var isCartStep = currentAction == "cartreview";
+    var isFindVehicleStep = !(isCartStep || isCheckoutStep);
+}
+
+<div class="progress-step @(isFindVehicleStep ? "active" : "")">
+    <a href="@Url.Action("Index", "Home")" class="bold-text custom">
+        <span>FIND YOUR VEHICLE @(isFindVehicleStep ? "❯❯" : "")</span>
+    </a>
+</div>
+
+<div class="progress-step @(isCartStep ? "active" : "")">
+    <a href="@Url.Action("CartReview", "Cart")" class="custom">
+        <span>REVIEW @(isCartStep ? "❯❯" : "")</span>
+    </a>
+</div>
+
+<div class="progress-step checkout-step @(isCheckoutStep ? "active" : "")">
+    <a href="@Url.Action("Checkout", "Cart")" class="custom">
+        <span>CHECKOUT @(isCheckoutStep ? "❯❯" : "")</span>
+    </a>
+</div>
