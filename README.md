@@ -1,3 +1,8 @@
+<img width="1536" height="1024" alt="04" src="https://github.com/user-attachments/assets/1e90ad94-8dc1-4e03-b232-78f86a6fd456" />
+<img width="1536" height="1024" alt="03" src="https://github.com/user-attachments/assets/f673f0e1-5ec5-4829-aa46-24b19631b4c7" />
+<img width="1536" height="1024" alt="02" src="https://github.com/user-attachments/assets/831f9508-6114-437c-af44-e8405eb939bf" />
+<img width="1536" height="1024" alt="01" src="https://github.com/user-attachments/assets/8d288429-cab9-40e2-89d1-1e0ef88c582e" />
+
 # ASP.NET Core MVC E-Commerce Demo
 
 This is a public demo version of an ASP.NET Core MVC e-commerce project created for portfolio and recruitment purposes.
@@ -62,7 +67,4 @@ Portfolio demo / public showcase version.
 ## Developer
 
 Abdul Kabeer Mughal  
-.NET Developer | ASP.NET Core MVC | C# | SQL Server | AWS<img width="1536" height="1024" alt="04" src="https://github.com/user-attachments/assets/1e90ad94-8dc1-4e03-b232-78f86a6fd456" />
-<img width="1536" height="1024" alt="03" src="https://github.com/user-attachments/assets/f673f0e1-5ec5-4829-aa46-24b19631b4c7" />
-<img width="1536" height="1024" alt="02" src="https://github.com/user-attachments/assets/831f9508-6114-437c-af44-e8405eb939bf" />
-<img width="1536" height="1024" alt="01" src="https://github.com/user-attachments/assets/8d288429-cab9-40e2-89d1-1e0ef88c582e" />
+.NET Developer | ASP.NET Core MVC | C# | SQL Server | AWS
